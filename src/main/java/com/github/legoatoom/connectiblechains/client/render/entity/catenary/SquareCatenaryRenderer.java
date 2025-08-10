@@ -19,7 +19,7 @@ public class SquareCatenaryRenderer extends CatenaryRenderer {
 
     @Override
     public ChainModel buildModel(Vector3f chainVec) {
-        float desiredSegmentLength = 1f / ConnectibleChains.runtimeConfig.getQuality();
+    float desiredSegmentLength = 1f / ConnectibleChains.QUALITY;
         int initialCapacity = (int) (4f * chainVec.lengthSquared() / desiredSegmentLength);
         ChainModel.Builder builder = ChainModel.builder(initialCapacity);
 
@@ -72,7 +72,7 @@ public class SquareCatenaryRenderer extends CatenaryRenderer {
      * @param endPosition The end position in relation to the origin
      */
     private void buildFace(ChainModel.Builder builder, Vector3f endPosition) {
-        float desiredSegmentLength = 1f / ConnectibleChains.runtimeConfig.getQuality();
+    float desiredSegmentLength = 1f / ConnectibleChains.QUALITY;
         // Distance XYZ
         float distance = endPosition.length();
         // Distance XZ

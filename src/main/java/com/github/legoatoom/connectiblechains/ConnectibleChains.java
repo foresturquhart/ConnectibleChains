@@ -13,19 +13,12 @@
  */
 
 package com.github.legoatoom.connectiblechains;
-
-
-import com.github.legoatoom.connectiblechains.config.ModConfig;
 import com.github.legoatoom.connectiblechains.entity.ModEntityTypes;
 import com.github.legoatoom.connectiblechains.item.ChainItemCallbacks;
 import com.github.legoatoom.connectiblechains.networking.packet.Payloads;
 import com.mojang.logging.LogUtils;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.ConfigHolder;
-import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import org.slf4j.Logger;
 
 /**
@@ -40,15 +33,10 @@ public class ConnectibleChains implements ModInitializer {
      */
     public static final String MODID = "connectiblechains";
     public static final Logger LOGGER = LogUtils.getLogger();
-    /**
-     * ModConfigs are helpful if people keep demanding for your chains to get longer...
-     * File config is what's saved on disk, runtimeConfig should be used in most cases
-     */
-    public static ModConfig fileConfig;
-    /**
-     * Runtime config is a mix of the client and server config and should not be saved to disk
-     */
-    public static ModConfig runtimeConfig;
+
+    public static final float CHAIN_HANG_AMOUNT = 32.0F; // flatter curve
+    public static final int MAX_CHAIN_RANGE = 128;        // max chain length in blocks
+    public static final int QUALITY = 4;                  // segment density
 
     /**
      * Here is where the fun begins.
@@ -58,16 +46,9 @@ public class ConnectibleChains implements ModInitializer {
 
         ModEntityTypes.init();
         Payloads.init();
-        AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
-        ConfigHolder<ModConfig> configHolder = AutoConfig.getConfigHolder(ModConfig.class);
-        fileConfig = configHolder.getConfig();
-        runtimeConfig = new ModConfig().copyFrom(fileConfig);
 
         // On Clicking with a Chain event.
         UseBlockCallback.EVENT.register(ChainItemCallbacks::chainUseEvent);
-
-        // Need this event on dedicated and internal server because of 'open to lan'.
-        ServerPlayConnectionEvents.INIT.register((handler, server) -> fileConfig.syncToClient(handler.getPlayer()));
 
     }
 

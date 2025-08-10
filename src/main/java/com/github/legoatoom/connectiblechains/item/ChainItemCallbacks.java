@@ -119,7 +119,7 @@ public class ChainItemCallbacks {
     }
 
     public static List<Chainable> collectChainablesAround(World world, BlockPos pos, Predicate<Chainable> predicate) {
-        double distance = ConnectibleChains.runtimeConfig.getMaxChainRange();
+        double distance = ConnectibleChains.MAX_CHAIN_RANGE;
 
         Box box = new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ()).expand(distance);
         return world.getEntitiesByClass(Entity.class, box, entity -> entity instanceof Chainable chainable && predicate.test(chainable)).stream().map(Chainable.class::cast).toList();
@@ -128,13 +128,11 @@ public class ChainItemCallbacks {
 
     @Environment(EnvType.CLIENT)
     public static void infoToolTip(ItemStack itemStack, Item.TooltipContext ignoredTooltipContext, TooltipType ignoredTooltipType, List<Text> texts) {
-        if (ConnectibleChains.runtimeConfig.doShowToolTip()) {
-            if (itemStack.isIn(ModTagRegistry.CATENARY_ITEMS)) {
-                if (Screen.hasShiftDown()) {
-                    texts.add(1, Text.translatable("message.connectiblechains.connectible_chain_detailed").formatted(Formatting.AQUA));
-                } else {
-                    texts.add(1, Text.translatable("message.connectiblechains.connectible_chain").formatted(Formatting.YELLOW));
-                }
+        if (itemStack.isIn(ModTagRegistry.CATENARY_ITEMS)) {
+            if (Screen.hasShiftDown()) {
+                texts.add(1, Text.translatable("message.connectiblechains.connectible_chain_detailed").formatted(Formatting.AQUA));
+            } else {
+                texts.add(1, Text.translatable("message.connectiblechains.connectible_chain").formatted(Formatting.YELLOW));
             }
         }
     }

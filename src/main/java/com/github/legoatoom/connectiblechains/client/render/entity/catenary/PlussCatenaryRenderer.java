@@ -17,7 +17,7 @@ public class PlussCatenaryRenderer extends CatenaryRenderer {
 
     @Override
     public ChainModel buildModel(Vector3f chainVec) {
-        float desiredSegmentLength = 1f / ConnectibleChains.runtimeConfig.getQuality();
+    float desiredSegmentLength = 1f / ConnectibleChains.QUALITY;
         int initialCapacity = (int) (2f * chainVec.lengthSquared() / desiredSegmentLength);
         ChainModel.Builder builder = ChainModel.builder(initialCapacity);
 
@@ -69,7 +69,7 @@ public class PlussCatenaryRenderer extends CatenaryRenderer {
      * @param uv          The uv bounds of the face
      */
     private void buildFace(ChainModel.Builder builder, Vector3f endPosition, float angle, UVRect uv) {
-        float desiredSegmentLength = 1f / ConnectibleChains.runtimeConfig.getQuality();
+    float desiredSegmentLength = 1f / ConnectibleChains.QUALITY;
         // Distance XYZ
         float distance = endPosition.length();
         // Distance XZ

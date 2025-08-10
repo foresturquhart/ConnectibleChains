@@ -40,7 +40,7 @@ public interface Chainable {
     String SOURCE_ITEM_KEY = "SourceItem";
 
     static double getMaxChainLength() {
-        return ConnectibleChains.runtimeConfig.getMaxChainRange();
+        return ConnectibleChains.MAX_CHAIN_RANGE;
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")

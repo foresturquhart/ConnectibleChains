@@ -27,9 +27,6 @@
     ],
     "client": [
       "com.github.legoatoom.connectiblechains.client.ClientInitializer"
-    ],
-    "modmenu": [
-      "com.github.legoatoom.connectiblechains.config.ModMenuIntegration"
     ]
   },
 
@@ -38,8 +35,5 @@
     "fabric": "*",
     "minecraft": ">=1.21.6 <=1.21.8",
     "cloth-config": ">=18.0.145"
-  },
-  "suggests": {
-    "modmenu": ">=14.0.0-rc.2"
   }
 }
