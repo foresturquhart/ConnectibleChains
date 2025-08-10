@@ -48,8 +48,7 @@ public class Helper {
      * @return y
      */
     public static double drip2(double x, double d, double h) {
-        double a = ConnectibleChains.CHAIN_HANG_AMOUNT;
-        a = a + (d * 0.3);
+        double a = hangParam(d);
         double p1 = a * asinh((h / (2D * a)) * (1D / Math.sinh(d / (2D * a))));
         double p2 = -a * Math.cosh((2D * p1 - d) / (2D * a));
         return p2 + a * Math.cosh((((2D * x) + (2D * p1)) - d) / (2D * a));
@@ -70,9 +69,20 @@ public class Helper {
      * @return gradient at x
      */
     public static double drip2prime(double x, double d, double h) {
-        double a = ConnectibleChains.CHAIN_HANG_AMOUNT;
+        double a = hangParam(d);
         double p1 = a * asinh((h / (2D * a)) * (1D / Math.sinh(d / (2D * a))));
         return Math.sinh((2 * x + 2 * p1 - d) / (2 * a));
+    }
+
+    private static double hangParam(double d) {
+        double a = ConnectibleChains.CHAIN_HANG_AMOUNT;
+        double over = Math.max(0.0, d - ConnectibleChains.CHAIN_HANG_PIVOT);
+        double computed = a + over * ConnectibleChains.CHAIN_HANG_LENGTH_SLOPE;
+        // Apply optional cap if configured (> 0)
+        if (ConnectibleChains.CHAIN_HANG_MAX_A > 0f) {
+            computed = Math.min(computed, ConnectibleChains.CHAIN_HANG_MAX_A);
+        }
+        return computed;
     }
 
     public static Vec3d middleOf(Vec3d a, Vec3d b) {

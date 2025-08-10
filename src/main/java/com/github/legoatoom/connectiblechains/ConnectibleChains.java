@@ -34,7 +34,14 @@ public class ConnectibleChains implements ModInitializer {
     public static final String MODID = "connectiblechains";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final float CHAIN_HANG_AMOUNT = 32.0F; // flatter curve
+    public static final float CHAIN_HANG_AMOUNT = 32.0F; // base catenary "a"; higher = flatter
+    // Length-based flattening: for chains longer than the pivot, increase "a" linearly by slope per block.
+    // This keeps short chains looking the same while reducing sag for very long spans.
+    public static final float CHAIN_HANG_PIVOT = 12.0F;      // blocks before extra flattening kicks in
+    public static final float CHAIN_HANG_LENGTH_SLOPE = 1.0F; // extra "a" per block beyond pivot
+    // Max cap to prevent chains from becoming too flat on extremely long spans.
+    // Set to a positive value to enable capping, or <= 0 to disable.
+    public static final float CHAIN_HANG_MAX_A = 80.0F;
     public static final int MAX_CHAIN_RANGE = 128;        // max chain length in blocks
     public static final int QUALITY = 4;                  // segment density
 
