@@ -14,7 +14,6 @@
 
 package com.github.legoatoom.connectiblechains.client.render.entity;
 
-import com.github.legoatoom.connectiblechains.ConnectibleChains;
 import com.github.legoatoom.connectiblechains.client.ClientInitializer;
 import com.github.legoatoom.connectiblechains.client.render.entity.catenary.CatenaryRenderer;
 import com.github.legoatoom.connectiblechains.client.render.entity.model.ChainKnotEntityModel;
@@ -116,12 +115,12 @@ public class ChainKnotEntityRenderer extends EntityRenderer<ChainKnotEntity> {
         HashSet<ChainKnotEntityRenderState.ChainData> chainDataSet = state.chainDataSet;
         for (ChainKnotEntityRenderState.ChainData chainData : chainDataSet) {
             renderChainLink(matrices, vertexConsumers, chainData);
-            if (ConnectibleChains.runtimeConfig.doDebugDraw()) {
+            if (net.minecraft.client.MinecraftClient.getInstance().getDebugHud().shouldShowDebugHud()) {
                 this.drawDebugVector(matrices, chainData.startPos, chainData.endPos, vertexConsumers.getBuffer(RenderLayer.LINES));
             }
         }
 
-        if (ConnectibleChains.runtimeConfig.doDebugDraw()) {
+        if (net.minecraft.client.MinecraftClient.getInstance().getDebugHud().shouldShowDebugHud()) {
             matrices.push();
             Text holdingCount = Text.literal("C: " + chainDataSet.size());
             this.renderLabelIfPresent(entity, holdingCount, matrices, vertexConsumers, light, tickDelta);
@@ -142,7 +141,7 @@ public class ChainKnotEntityRenderer extends EntityRenderer<ChainKnotEntity> {
 
         RenderLayer entityCutout = RenderLayer.getEntityCutoutNoCull(getChainTexture(sourceItem));
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(entityCutout);
-        if (ConnectibleChains.runtimeConfig.doDebugDraw()) {
+        if (net.minecraft.client.MinecraftClient.getInstance().getDebugHud().shouldShowDebugHud()) {
             vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getLines());
         }
 
@@ -223,7 +222,7 @@ public class ChainKnotEntityRenderer extends EntityRenderer<ChainKnotEntity> {
         }
         state.chainDataSet = result;
         state.sourceItem = entity.getSourceItem();
-        if (ConnectibleChains.runtimeConfig.doDebugDraw()) {
+        if (net.minecraft.client.MinecraftClient.getInstance().getDebugHud().shouldShowDebugHud()) {
             state.nameLabelPos = entity.getAttachments().getPointNullable(EntityAttachmentType.NAME_TAG, 0, entity.getLerpTargetYaw());
         }
     }

@@ -272,7 +272,8 @@ public class ChainKnotEntity extends BlockAttachedEntity implements Chainable, C
         if (getWorld().getBlockState(getAttachedBlockPos()).isIn(BlockTags.WALLS)) {
             return false;
         }
-        return distance < 1024.0; //TODO: Determine if this needs to be changed, it used to be just true.
+        // distance is squared distance; 16384 ~= 128 blocks, give some headroom
+        return distance < 40000.0; // ~200 blocks
     }
 
     @Override

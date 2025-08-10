@@ -36,7 +36,7 @@ public interface Chainable {
     String SOURCE_ITEM_KEY = "SourceItem";
 
     static double getMaxChainLength() {
-        return ConnectibleChains.runtimeConfig.getMaxChainRange();
+        return ConnectibleChains.MAX_CHAIN_RANGE;
     }
 
     private static <E extends BlockAttachedEntity & Chainable> boolean canAttachTo(E entity, Entity potentialHolder) {
